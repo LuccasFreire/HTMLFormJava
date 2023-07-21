@@ -1,5 +1,6 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class RegisterDao {
@@ -31,7 +32,25 @@ public class RegisterDao {
 	public String insert(User user) {
 		
 		loadDriver(dbDriver);
+		Connection connect = getConnection();
+		String result = "Success";
+		String sql = "insert into user values(?,?,?,?)";
+		PreparedStatement pstatement;
+		try {
+			pstatement = connect.prepareStatement(sql);
+			pstatement.setString(1, user.getUsername());
+			pstatement.setString(2, user.getPassword());
+			pstatement.setString(3, user.getEmail());
+			pstatement.setString(4, user.getPhonenumber());
+			pstatement.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			result = "Error!";
+		}
 		
-		return null;
+		
+		
+		return result;
 	}
 }

@@ -43,7 +43,8 @@ public class Register extends HttpServlet {
 		User user = new User(username, password, email, phonenumber);
 		
 		RegisterDao rDao = new RegisterDao();
-		rDao.insert(user);
+		String result = rDao.insert(user);
+		response.getWriter().print(result);
 	}
 
 }
